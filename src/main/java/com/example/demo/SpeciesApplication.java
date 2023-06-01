@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.demo.enums.Sex;
 import com.example.demo.model.Animal;
 import com.example.demo.model.Person;
 import com.example.demo.model.Species;
@@ -35,7 +36,7 @@ public class SpeciesApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		// TP 3
+		// TP 03
 		// Afficher la liste des entités avec findAll
 		List<Animal> animals = this.animalRepository.findAll();
 		System.out.println("Liste des animaux: " + animals);
@@ -63,7 +64,7 @@ public class SpeciesApplication implements CommandLineRunner {
 			// autre méthode
 		//this.speciesRepository.deleteById(nouvelleEspece.getId());
 		
-		// TP 4
+		// TP 04
 		//Première espece dont le nom commun est égal au le parametre
 		System.out.println("Première espece: " + speciesRepository.findFirstByCommonName("Tortue").get(0).getCommonName());
 		
@@ -88,12 +89,30 @@ public class SpeciesApplication implements CommandLineRunner {
 			speciesList.add(specie);
 		}
 		List<Animal> resAnimal = animalRepository.findBySpecies(speciesList.get(0));// 0-> id 1 = chat
-		resAnimal.forEach(a -> System.out.println("Nom de l'animal pour l'espece: " + a.getName()));
+		System.out.println("Nom des animaux de l'espece chat: ");
+		resAnimal.forEach(a -> System.out.println(a.getName()));
 		
 		//Animaux dont la couleur fait partie de la liste
 		List<String> colors = new ArrayList<>(Arrays.asList("Brun", "Roux", "Rose"));
 		List<Animal> resAnimalColor = animalRepository.findByColorIn(colors);
-		resAnimalColor.forEach(c -> System.out.println("Nom de l'animal pour la couleur: " + c.getName()));
+		System.out.println("Nom des animaux ayant les couleurs de la liste: ");
+		resAnimalColor.forEach(c -> System.out.println(c.getName()));
+		
+		// TP 05
+		//Especes, ordonnées par nom commun ascendant
+		System.out.println("Espece par ordre ascendant :");
+		speciesRepository.findAllOrderedByCommonNameAscSql().forEach(s -> System.out.println(s.getCommonName())); 
+		
+		//Especes avec un nom commun LIKE le parametre
+		System.out.println("Espece ayant un nom commun semblable à hat:");
+		speciesRepository.findByCommonNameLikeJpql("hat").forEach(e -> System.out.println(e.getCommonName()));
+		
+		//Personnes dont l’âge est entre « age min » et « age max »
+		System.out.println("Personnes ayant un age entre 16 et 55 ans :");
+		personRepository.findBetweenMinAgeAndMaxAge(16, 55).forEach(p -> System.out.println(p.getFirstname() + " " + p.getLastname()));
+		
+		//Nombre d’Animaux dont le Sex est égal à la valeur donnée en paramètres
+		System.out.println("Nombre d'animaux étant des femelles : " + animalRepository.countAnimalsBySex(Sex.F));
 	}
 		
 }
