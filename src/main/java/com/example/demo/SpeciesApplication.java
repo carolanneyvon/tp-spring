@@ -93,7 +93,7 @@ public class SpeciesApplication implements CommandLineRunner {
 		resAnimal.forEach(a -> System.out.println(a.getName()));
 		
 		//Animaux dont la couleur fait partie de la liste
-		List<String> colors = new ArrayList<>(Arrays.asList("Brun", "Roux", "Rose"));
+		List<String> colors = Arrays.asList("Brun", "Roux", "Rose");
 		List<Animal> resAnimalColor = animalRepository.findByColorIn(colors);
 		System.out.println("Nom des animaux ayant les couleurs de la liste: ");
 		resAnimalColor.forEach(c -> System.out.println(c.getName()));
