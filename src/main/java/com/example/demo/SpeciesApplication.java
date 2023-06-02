@@ -19,7 +19,7 @@ import com.example.demo.repository.PersonRepository;
 import com.example.demo.repository.SpeciesRepository;
 
 @SpringBootApplication
-public class SpeciesApplication implements CommandLineRunner {
+public class SpeciesApplication /* implements CommandLineRunner */ {
 	@Autowired
 	private AnimalRepository animalRepository;
 
@@ -33,7 +33,7 @@ public class SpeciesApplication implements CommandLineRunner {
 		SpringApplication.run(SpeciesApplication.class, args);
 	}
 
-	@Override
+	//@Override
 	public void run(String... args) throws Exception {
 		
 		// TP 03
@@ -46,11 +46,11 @@ public class SpeciesApplication implements CommandLineRunner {
 		System.out.println("Liste des espéces: " + species);
 		
 		// Créer une entité avec la méthode save
-		Species nouvelleEspece = new Species();
-		nouvelleEspece.setCommonName("Tortue");
-		nouvelleEspece.setLatinName("Testudines");
-		this.speciesRepository.save(nouvelleEspece);
-		System.out.println("Nouvelle espece: " + nouvelleEspece);
+//		Species nouvelleEspece = new Species();
+//		nouvelleEspece.setCommonName("Tortue");
+//		nouvelleEspece.setLatinName("Testudines");
+//		this.speciesRepository.save(nouvelleEspece);
+//		System.out.println("Nouvelle espece: " + nouvelleEspece);
 		
 		// Rechercher une entité par son id avec findById
 		Optional<Species> speciesOptional = this.speciesRepository.findById(1);
@@ -60,7 +60,7 @@ public class SpeciesApplication implements CommandLineRunner {
 		System.out.println("Espece id= 1 : " + speciesOptional);
 		
 		// Supprimer une entité avec delete
-		this.speciesRepository.delete(nouvelleEspece);
+//		this.speciesRepository.delete(nouvelleEspece);
 			// autre méthode
 		//this.speciesRepository.deleteById(nouvelleEspece.getId());
 		
@@ -134,13 +134,13 @@ public class SpeciesApplication implements CommandLineRunner {
 		
 		// TP 06
 		//Ajouter des personnes sans animaux
-		personRepository.addPerson(3);
+//		personRepository.addPerson(3);
 		
 		//(en plus du TP) Ajouter des personnes avec des animaux
-		personRepository.addPersonWithAnimal(2);
+//		personRepository.addPersonWithAnimal(2);
 		
 		//Supprimer les personnes sans animaux
-		personRepository.deletePersonWithoutAnimal();
+//		personRepository.deletePersonWithoutAnimal();
 	}
 		
 }
