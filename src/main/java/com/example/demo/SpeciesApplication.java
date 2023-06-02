@@ -131,6 +131,16 @@ public class SpeciesApplication implements CommandLineRunner {
 				System.out.println(animal.getName() + " n'a pas de propriétaire");
 			}
 		}
+		
+		// TP 06
+		//Ajouter des personnes sans animaux
+		personRepository.addPerson(3);
+		
+		//(en plus du TP) Ajouter des personnes avec des animaux
+		personRepository.addPersonWithAnimal(2);
+		
+		//Supprimer les personnes sans animaux
+		personRepository.deletePersonWithoutAnimal();
 	}
 		
 }

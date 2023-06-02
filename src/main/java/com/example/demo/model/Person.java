@@ -94,6 +94,20 @@ public class Person {
 		this.lastname = lastname;
 	}
 
+	/** Getter pour l'attribut animals
+	 * @return the animals
+	 */
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+
+	/** Setter pour l'attribut animals
+	 * @param animals the animals to set
+	 */
+	public void setAnimals(List<Animal> animals) {
+		this.animals = animals;
+	}
+
 	
 	
 }
