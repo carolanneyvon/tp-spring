@@ -27,4 +27,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
 	Integer countAnimalsBySex(@Param("sex")Sex sex);
 	
 	//OPTION difficile ++ -> Renvoie un booléen si l’animal fourni « appartient » à au moins une personne
+	@Query("SELECT CASE WHEN (COUNT(a)>0) THEN true ELSE false END FROM Person p JOIN p.animals a WHERE a = :animal")
+	boolean animalPerson(@Param("animal") Animal animal);
 }

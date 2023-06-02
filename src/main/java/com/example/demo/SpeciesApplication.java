@@ -111,8 +111,26 @@ public class SpeciesApplication implements CommandLineRunner {
 		System.out.println("Personnes ayant un age entre 16 et 55 ans :");
 		personRepository.findBetweenMinAgeAndMaxAge(16, 55).forEach(p -> System.out.println(p.getFirstname() + " " + p.getLastname()));
 		
+		//Personnes qui possèdent l’animal donné en paramètre
+		List<Animal> animalsList = new ArrayList<>();
+		for (Animal animal : animals) {
+			animalsList.add(animal);
+		}
+		System.out.println("Personnes ayant un chat :");
+		// 0-> id 1 = chat
+		personRepository.findAllPersonsByAnimal(animalsList.get(0)).forEach(p -> System.out.println(p.getFirstname() + " " + p.getLastname()));
+		
 		//Nombre d’Animaux dont le Sex est égal à la valeur donnée en paramètres
 		System.out.println("Nombre d'animaux étant des femelles : " + animalRepository.countAnimalsBySex(Sex.F));
+		
+		//L'animal appartient à un propriétaire ou non
+		for (Animal animal : animalsList) {
+			if (animalRepository.animalPerson(animal)) {
+				System.out.println(animal.getName() + " a un propriétaire");
+			} else {
+				System.out.println(animal.getName() + " n'a pas de propriétaire");
+			}
+		}
 	}
 		
 }
