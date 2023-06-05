@@ -1,13 +1,43 @@
-<html >
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
 	<meta charset="UTF-8">
 	<title>Création d'un animal</title>
 </head>
 
 <body>
 	<h1>Création d'un animal</h1>
+	
+	<form th:object="${animalCreate}" th:action="@{/animal}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		<div>
+			<label for="name">Nom : </label>
+			<input type="text" th:field="*{name}" id="name" />
+		</div>
+		<div>
+			<label for="color">Couleur :</label>
+			<input type="text" th:field="*{color}" id="color" />
+		</div>
+		<div>
+			<label for="sex">Sexe :</label>
+			<select th:field="*{sex}" id="sex">
+				<option th:each="sex : ${T(com.example.demo.enums.Sex).values()}" th:value="${sex}" th:text="${sex}">
+				</option>
+			</select>
+		</div>
+		<div>
+			<label for="specie">Espèce :</label>
+			<select th.field="*{specie}" id="specie">
+				<option th:each="specie :${speciesList}" th:value="${specie.id}" th:text="${specie.commonName}">
+				</option>
+			</select>
+		</div>
+		<div>
+			<input type="submit" class="button" value="Créer" />
+			<input type="button" class="button" value="Retour" onclick="window.location='/animal'" />
+		</div>
+	</form>
 </body>
 
 </html>

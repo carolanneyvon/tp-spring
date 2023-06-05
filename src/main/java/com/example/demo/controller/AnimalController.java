@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.model.Animal;
 import com.example.demo.repository.AnimalRepository;
+import com.example.demo.repository.SpeciesRepository;
 
 
 
@@ -18,6 +20,8 @@ import com.example.demo.repository.AnimalRepository;
 public class AnimalController {
 	@Autowired
 	private AnimalRepository animalRepository;
+	@Autowired
+	private SpeciesRepository speciesRepository;
 	
 	@GetMapping("animal")
 	public String getListAnimal(Model model) {
@@ -41,6 +45,10 @@ public class AnimalController {
 		}
 		
 		model.addAttribute("animalDetail", animalOpt.get());
+		model.addAttribute(
+				"speciesList",
+				speciesRepository.findAll(Sort.by(Sort.Direction.ASC, "commonName"))
+				);
 
 		return "animal/detail_animal";
 	}
@@ -49,6 +57,10 @@ public class AnimalController {
 	public String getCreateAnimal(Model model) {
 
 		model.addAttribute("animalCreate", new Animal());
+		model.addAttribute(
+				"speciesList",
+				speciesRepository.findAll(Sort.by(Sort.Direction.ASC, "commonName"))
+				);
 
 		return "animal/create_animal";
 	}

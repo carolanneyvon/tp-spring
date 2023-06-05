@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.model.Person;
+import com.example.demo.repository.AnimalRepository;
 import com.example.demo.repository.PersonRepository;
 
 
@@ -17,6 +19,9 @@ import com.example.demo.repository.PersonRepository;
 public class PersonController {
 	@Autowired
 	private PersonRepository personRepository;
+	
+	@Autowired
+	private AnimalRepository animalRepository;
 	
 	@GetMapping("person")
 	public String getListPerson(Model model) {
@@ -40,6 +45,10 @@ public class PersonController {
 		}
 		
 		model.addAttribute("personDetail", personOpt.get());
+		model.addAttribute(
+				"animalList",
+				animalRepository.findAll(Sort.by(Sort.Direction.ASC, "name"))
+				);
 
 		return "person/detail_person";
 	}
@@ -48,6 +57,10 @@ public class PersonController {
 	public String getCreatePerson(Model model) {
 
 		model.addAttribute("personCreate", new Person());
+		model.addAttribute(
+				"animalList",
+				animalRepository.findAll(Sort.by(Sort.Direction.ASC, "name"))
+				);
 
 		return "person/create_person";
 	}

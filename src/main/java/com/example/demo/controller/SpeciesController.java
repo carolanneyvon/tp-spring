@@ -8,9 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Species;
 import com.example.demo.repository.SpeciesRepository;
+
 
 @Controller
 public class SpeciesController {
@@ -50,4 +52,17 @@ public class SpeciesController {
 
 		return "species/create_species";
 	}
+	
+//	@PostMapping("/species")
+//	public String createOrUpdate(Species speciesList) {
+//		this.speciesRepository.save(speciesList);
+//		return "redirect:/species";
+//	}
+	
+//	@GetMapping("/species/delete/{id}")
+//	public String delete(@PathVariable("id") Integer speciesId) {
+//	Optional<Species> speciesToDelete = this.speciesRepository.findById(speciesId);
+//	speciesToDelete.ifPresent(species -> this.speciesRepository.delete(species));
+//	return "redirect:/species";
+//	}
 }

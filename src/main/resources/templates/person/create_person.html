@@ -1,13 +1,43 @@
-<html >
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
 	<meta charset="UTF-8">
 	<title>Création d'une personne</title>
 </head>
 
 <body>
 	<h1>Création d'une personne</h1>
+	
+	<form th:object="${personCreate}" th:action="@{/person}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		<div>
+			<label for="age">Age : </label>
+			<input type="text" th:field="*{age}" id="age" />
+		</div>
+		<div>
+			<label for="firstname">Prénom :</label>
+			<input type="text" th:field="*{firstname}" id="firstname" />
+		</div>
+		<div>
+			<label for="lastname">Nom : </label>
+			<input type="text" th:field="*{lastname}" id="lastname" />
+		</div>
+		<div>
+			<label for="animals">Animaux :</label>
+			<select multiple th.field="*{animals}" id="animals">
+				<option 
+					th:each="animal :${animalList}" 
+					th:value="${animal.id}" 
+					th:text="${animal.name}">
+				</option>
+			</select>
+		</div>
+		<div>
+			<input type="submit" class="button" value="Créer" />
+			<input type="button" class="button" value="Retour" onclick="window.location='/person'" />
+		</div>
+	</form>
 </body>
 
 </html>

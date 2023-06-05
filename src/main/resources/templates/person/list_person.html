@@ -1,13 +1,37 @@
-<html >
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link rel="stylesheet" href="@{/css/main.css}">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
 	<meta charset="UTF-8">
 	<title>Liste des personnes</title>
 </head>
 
 <body>
 	<h1>Liste des personnes</h1>
+	
+	<table class="mainTable">
+		<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Age</th>
+				<th>Animaux</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="person : ${personList}">
+				<td th:text="${person.firstname}"></td>
+				<td th:text="${person.lastname}"></td>
+				<td th:text="${person.age}"></td>
+				<td th:each="animal : ${person.animals}" th:text="${animal.name}"></td>
+				<td><a th:href="@{'/person/' + ${person.id}}"> Mettre à jour</a></td>
+				<td><a th:href="@{'/person/delete/' + ${person.id}}"> Supprimer</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="button" onclick="window.location='/person/create'">Ajouter une personne</button>
+	<button type="button" onclick="window.location='/species'">Liste des espèces</button>
+	<button type="button" onclick="window.location='/animal'">Liste des animaux</button>
 </body>
 
 </html>

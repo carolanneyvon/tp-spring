@@ -1,13 +1,45 @@
-<html >
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" th:href="@{/css/main.css}">
 	<meta charset="UTF-8">
 	<title>Détails de la personne</title>
 </head>
 
 <body>
 	<h1>Détails de la personne</h1>
+	
+	<form th:object="${personDetail}" th:action="@{/person}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		<div>
+			<label for="age">Age : </label>
+			<input type="text" th:field="*{age}" id="age" />
+			<span th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</span>
+		</div>
+		<div>
+			<label for="firstname">Prénom :</label>
+			<input type="text" th:field="*{firstname}" id="firstname" />
+		</div>
+		<div>
+			<label for="lastname">Nom : </label>
+			<input type="text" th:field="*{lastname}" id="lastname" />
+		</div>
+		<div>
+			<label for="animals">Animaux :</label>
+			<select multiple th:field="*{animals}" id="animals">
+				<option 
+					th:each="animal :${animalList}" 
+					th:value="${animal.id}" 
+					th:text="${animal.name}">
+				</option>
+			</select>
+		</div>
+		<div>
+			<input type="submit" class="button" value="Sauver" />
+			<input type="button" class="button" value="Retour" onclick="window.location='/person'" />
+		</div>
+	</form>
+
 </body>
 
 </html>
