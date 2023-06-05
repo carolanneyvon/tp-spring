@@ -27,7 +27,7 @@
 		</div>
 		<div>
 			<label for="animals">Animaux :</label>
-			<select multiple th.field="*{animals}" id="animals">
+			<select multiple th:field="*{animals}" id="animals">
 				<option 
 					th:each="animal :${animalList}" 
 					th:value="${animal.id}" 

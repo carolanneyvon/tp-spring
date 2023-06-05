@@ -30,8 +30,11 @@
 		</div>
 		<div>
 			<label for="specie">Espèce :</label>
-			<select th.field="*{specie}" id="specie">
-				<option th:each="specie :${speciesList}" th:value="${specie.id}" th:text="${specie.commonName}">
+			<select th:field="*{species}" id="specie">
+				<option 
+				th:each="specie :${speciesList}" 
+				th:value="${specie.id}" 
+				th:text="${specie.commonName + '(' + specie.latinName + ')'}">
 				</option>
 			</select>
 		</div>

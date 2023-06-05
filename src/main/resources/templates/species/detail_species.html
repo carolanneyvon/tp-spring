@@ -12,30 +12,27 @@
 <body>
 	<h1 class="title">Détails de l'espèce</h1>
 
-	<div class="col-md-7 col-lg-8">
-		<form th:object="${speciesDetail}" th:action="@{/specie}" method="post">
+	<div class="container col-lg-6 col-xxl-6 my-5 mx-auto">
+		<form th:object="${speciesDetail}" th:action="@{/species}" method="post">
 			<input type="hidden" th:field="*{id}" />
-			<div class="mb-3">
+			<div class="form-group my-3">
 				<label class="form-label" for="commonName">Nom Commun : </label>
 				<input class="form-control" type="text" th:field="*{commonName}" id="commonName" />
 			</div>
-			<div class="mb-3">
+			<div class="form-group my-3">
 				<label class="form-label" for="latinName">Nom latin :</label>
 				<input class="form-control" type="text" th:field="*{latinName}" id="latinName" />
 			</div>
-			<div class="form-group">
-				<input type="submit" class="button" value="Sauver" />
-				<input type="button" class="button" value="Retour" onclick="window.location='/species'" />
-			</div>
-
-			<div>
-				<button class="btn btn-success d-inline-flex align-items-center" type="button">
+			<div class="form-group my-3">
+				<button class="btn btn-success d-inline-flex align-items-center" type="submit">
 					Enregistrer
 				</button>
-				<button class="btn btn-warning d-inline-flex align-items-center" type="button" onclick="window.location='/species'">
+				<button class="btn btn-secondary d-inline-flex align-items-center" type="submit"
+					onclick="window.location='/species'">
 					Retour
 				</button>
 			</div>
+
 		</form>
 	</div>
 

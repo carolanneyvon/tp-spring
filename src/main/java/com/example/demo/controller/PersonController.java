@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.model.Animal;
 import com.example.demo.model.Person;
 import com.example.demo.repository.AnimalRepository;
 import com.example.demo.repository.PersonRepository;
@@ -63,5 +65,31 @@ public class PersonController {
 				);
 
 		return "person/create_person";
+	}
+	
+	@PostMapping("/person")
+	public String createOrUpdate(Person person) {
+		personRepository.save(person);
+		return "redirect:/person";
+	}
+
+	
+	@GetMapping("/person/delete/{id}")
+	public String deletePerson(@PathVariable("id") Integer personId) {
+	    Optional<Person> personToDeleteOpt = personRepository.findById(personId);
+	    
+	    if (personToDeleteOpt.isPresent()) {
+	    	Person personToDelete = personToDeleteOpt.get();
+	        
+	        // Pour chaque animal liée à cet personne, supprimez la personne de la liste
+	        for (Animal animal : personToDelete.getAnimals()) {
+	            animal.getPerson().remove(personToDelete);
+	        }
+	        
+	        // Ensuite, supprimez la personne
+	        personRepository.delete(personToDelete);
+	    }
+	    
+	    return "redirect:/person";
 	}
 }

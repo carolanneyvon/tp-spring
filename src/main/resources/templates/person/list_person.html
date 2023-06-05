@@ -28,9 +28,9 @@
 					<td th:text="${person.firstname}"></td>
 					<td th:text="${person.lastname}"></td>
 					<td th:text="${person.age}"></td>
-					<td th:each="animal : ${person.animals}" th:text="${animal.name}"></td>
+					<td> <span th:each="animal : ${person.animals}" th:text="${animal.name} + ' '"></span></td>
 					<td><a th:href="@{'/person/' + ${person.id}}"><i class="bi bi-pencil"></i></a></td>
-					<td><a th:href="@{'/person/delete/' + ${person.id}}"><i class="bi bi-trash"></i></a></td>
+					<td><a th:href="@{'/person/delete/' + ${person.id}}" onclick="confirm('Êtes-vous sûr ?')"><i class="bi bi-trash"></i></a></td>
 				</tr>
 			</tbody>
 		</table>

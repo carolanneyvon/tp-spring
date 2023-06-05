@@ -31,7 +31,7 @@
 					<td th:text="${animalList.color}"></td>
 					<td th:text="${animalList.sex}"></td>
 					<td><a th:href="@{'/animal/' + ${animalList.id}}"><i class="bi bi-pencil"></i></a></td>
-					<td><a th:href="@{'/animal/delete/' + ${animalList.id}}"><i class="bi bi-trash"></i></a></td>
+					<td><a th:href="@{'/animal/delete/' + ${animalList.id}}" onclick="confirm('Êtes-vous sûr ?')"><i class="bi bi-trash"></i></a></td>
 				</tr>
 			</tbody>
 		</table>

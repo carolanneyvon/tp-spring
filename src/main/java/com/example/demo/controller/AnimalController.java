@@ -9,12 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Animal;
+import com.example.demo.model.Person;
 import com.example.demo.repository.AnimalRepository;
 import com.example.demo.repository.SpeciesRepository;
-
-
 
 @Controller
 public class AnimalController {
@@ -22,46 +22,67 @@ public class AnimalController {
 	private AnimalRepository animalRepository;
 	@Autowired
 	private SpeciesRepository speciesRepository;
-	
+
 	@GetMapping("animal")
 	public String getListAnimal(Model model) {
 		// 1ere etape : récup les animal via le repo
 		List<Animal> animalList = animalRepository.findAll();
-		
+
 		// 2eme etape : mettre la liste dans ce Model
 		model.addAttribute("animalList", animalList);
-		
+
 		// 3eme etape : retourne la vue
 		return "animal/list_animal";
 	}
-	
+
 	@GetMapping("animal/{id}")
-	public String getDetailAnimal(@PathVariable("id")Integer id, Model model) {
+	public String getDetailAnimal(@PathVariable("id") Integer id, Model model) {
 		Optional<Animal> animalOpt = animalRepository.findById(id);
-		
+
 		if (animalOpt.isEmpty()) {
-			//page d'erreur car pas de animal avec l'id renseigné
+			// page d'erreur car pas de animal avec l'id renseigné
 			return "error";
 		}
-		
+
 		model.addAttribute("animalDetail", animalOpt.get());
-		model.addAttribute(
-				"speciesList",
-				speciesRepository.findAll(Sort.by(Sort.Direction.ASC, "commonName"))
-				);
+		model.addAttribute("speciesList", speciesRepository.findAll(Sort.by(Sort.Direction.ASC, "commonName")));
 
 		return "animal/detail_animal";
 	}
-	
+
 	@GetMapping("animal/create")
 	public String getCreateAnimal(Model model) {
 
 		model.addAttribute("animalCreate", new Animal());
-		model.addAttribute(
-				"speciesList",
-				speciesRepository.findAll(Sort.by(Sort.Direction.ASC, "commonName"))
-				);
+		model.addAttribute("speciesList", speciesRepository.findAll(Sort.by(Sort.Direction.ASC, "commonName")));
 
 		return "animal/create_animal";
 	}
+
+	@PostMapping("/animal")
+	public String createOrUpdate(Animal animal) {
+		animalRepository.save(animal);
+		return "redirect:/animal";
+	}
+
+	
+	@GetMapping("/animal/delete/{id}")
+	public String deleteAnimal(@PathVariable("id") Integer animalId) {
+	    Optional<Animal> animalToDeleteOpt = animalRepository.findById(animalId);
+	    
+	    if (animalToDeleteOpt.isPresent()) {
+	        Animal animalToDelete = animalToDeleteOpt.get();
+	        
+	        // Pour chaque personne liée à cet animal, supprimez l'animal de la liste
+	        for (Person person : animalToDelete.getPerson()) {
+	            person.getAnimals().remove(animalToDelete);
+	        }
+	        
+	        // Ensuite, supprimez l'animal
+	        animalRepository.delete(animalToDelete);
+	    }
+	    
+	    return "redirect:/animal";
+	}
+
 }
