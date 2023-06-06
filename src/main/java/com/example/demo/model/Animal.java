@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import com.example.demo.enums.Sex;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -31,6 +35,10 @@ public class Animal {
 
 	@ManyToOne
 	private Species species;
+	
+	@ManyToMany(mappedBy = "animals")
+	@JsonIgnore
+	private List<Person> person;
 	
 	@Override
 	public String toString() {
@@ -106,6 +114,20 @@ public class Animal {
 	 */
 	public void setSpecies(Species species) {
 		this.species = species;
+	}
+
+	/** Getter pour l'attribut person
+	 * @return the person
+	 */
+	public List<Person> getPerson() {
+		return person;
+	}
+
+	/** Setter pour l'attribut person
+	 * @param person the person to set
+	 */
+	public void setPerson(List<Person> person) {
+		this.person = person;
 	}
 	
 	
