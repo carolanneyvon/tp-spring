@@ -13,15 +13,17 @@
 	<h1 class="title">Création d'une espèce</h1>
 
 	<div class="container col-lg-6 col-xxl-6 my-5 mx-auto">
-		<form th:object="${speciesCreate}" th:action="@{/species}" method="post">
+		<form th:object="${species}" th:action="@{/species}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<div class="form-group my-3">
 				<label class="form-label" for="commonName">Nom Commun : </label>
 				<input class="form-control" type="text" th:field="*{commonName}" id="commonName" />
+				<span th:if="${#fields.hasErrors('commonName')}" th:errors="*{commonName}">Error</span>
 			</div>
 			<div class="form-group my-3">
 				<label class="form-label" for="latinName">Nom latin :</label>
 				<input class="form-control" type="text" th:field="*{latinName}" id="latinName" />
+				<span th:if="${#fields.hasErrors('latinName')}" th:errors="*{latinName}">Error</span>
 			</div>
 			<div class="form-group my-3">
 				<button class="btn btn-success d-inline-flex align-items-center" type="submit">

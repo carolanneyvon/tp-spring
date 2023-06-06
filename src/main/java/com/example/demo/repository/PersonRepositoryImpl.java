@@ -48,6 +48,7 @@ public class PersonRepositoryImpl implements PersonRepositoryCustom {
 			Person person = new Person();
 			person.setFirstname(faker.name().firstName());
 			person.setLastname(faker.name().lastName());
+			person.setAge((int)(Math.random()*120));
 			em.persist(person);
 		}
 

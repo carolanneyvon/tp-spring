@@ -11,6 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -21,12 +26,19 @@ public class Person {
 	private Integer id;
 
 	@Column(length = 50)
+	@NotNull
+	@Max(150)
+	@Min(0)
 	private Integer age;
 
 	@Column(length = 50)
+	@NotEmpty //pas le droit à null ou string vide
+	@Size(max = 50)
 	private String firstname;
 
 	@Column(length = 50)
+	@NotEmpty
+	@Size(max = 50)
 	private String lastname;
 
 	@ManyToMany (fetch = FetchType.EAGER)

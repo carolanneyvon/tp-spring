@@ -30,7 +30,8 @@
 					<td th:text="${person.age}"></td>
 					<td> <span th:each="animal : ${person.animals}" th:text="${animal.name} + ' '"></span></td>
 					<td><a th:href="@{'/person/' + ${person.id}}"><i class="bi bi-pencil"></i></a></td>
-					<td><a th:href="@{'/person/delete/' + ${person.id}}" onclick="confirm('Êtes-vous sûr ?')"><i class="bi bi-trash"></i></a></td>
+					<td><a th:href="@{'/person/delete/' + ${person.id}}" onclick="confirm('Êtes-vous sûr ?')"><i
+								class="bi bi-trash"></i></a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -50,7 +51,16 @@
 			<i class="bi ms-1 bi-arrow-right"></i>
 		</button>
 	</div>
-	
+	<div class="d-flex gap-2 justify-content-center">
+		<form action="/person/generate" method="get">
+			<input type="number" name="nb" placeholder="Nbr de personnes" required min="1">
+			<button class="btn btn-primary d-inline-flex align-items-center" type="submit">
+				Générer des personnes
+				<i class="bi ms-1 bi-arrow-right"></i>
+			</button>
+		</form>
+	</div>
+
 </body>
 
 </html>

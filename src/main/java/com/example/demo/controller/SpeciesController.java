@@ -6,12 +6,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Species;
 import com.example.demo.repository.SpeciesRepository;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class SpeciesController {
@@ -39,7 +42,7 @@ public class SpeciesController {
 			return "error";
 		}
 
-		model.addAttribute("speciesDetail", speciesOpt.get());
+		model.addAttribute("species", speciesOpt.get());
 
 		return "species/detail_species";
 	}
@@ -47,14 +50,27 @@ public class SpeciesController {
 	@GetMapping("species/create")
 	public String getCreateSpecies(Model model) {
 
-		model.addAttribute("speciesCreate", new Species());
+		model.addAttribute("species", new Species());
 
 		return "species/create_species";
 	}
 
+//  Avant mise ne place de la validation
+//	@PostMapping("/species")
+//	public String createOrUpdate(Species speciesList) {
+//		speciesRepository.save(speciesList);
+//		return "redirect:/species";
+//	}
+	
 	@PostMapping("/species")
-	public String createOrUpdate(Species speciesList) {
-		speciesRepository.save(speciesList);
+	public String createOrUpdate(@Valid Species species, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			if (species.getId() != null) {
+				return "species/detail_species";
+			}
+			return "species/create_species";
+		}
+		speciesRepository.save(species);
 		return "redirect:/species";
 	}
 
