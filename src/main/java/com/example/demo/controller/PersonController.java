@@ -33,36 +33,36 @@ public class PersonController {
 	PersonService personService;
 
 //	// Create
-//	@PostMapping
-//	public Person createPerson(@RequestBody @Valid Person personToCreate) {
-//		return personService.create(personToCreate);
-//	}
-
-	// Create avec gestion des exceptions -> vérifier que l’utilisateur n’a pas
-	// passé d’entité avec id
 	@PostMapping
 	public Person createPerson(@RequestBody @Valid Person personToCreate) {
-		if (personToCreate.getId() != null) {
-			throw new IllegalArgumentException("Un ID ne doit pas être spécifié lors de la création d'une personne.");
-		}
 		return personService.create(personToCreate);
 	}
 
-	// Update
-//	@PutMapping("{id}")
-//	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
-//		return personService.update(personToUpdate);
+	// Create avec gestion des exceptions directement dans le Controller
+	// -> vérifier que l’utilisateur n’a pas passé d’entité avec id
+//	@PostMapping
+//	public Person createPerson(@RequestBody @Valid Person personToCreate) {
+//		if (personToCreate.getId() != null) {
+//			throw new IllegalArgumentException("Un ID ne doit pas être spécifié lors de la création d'une personne.");
+//		}
+//		return personService.create(personToCreate);
 //	}
 
-	// Update avec gestion des exceptions -> vérifier que l’utilisateur n’a pas
-	// passé d’entité sans id
+	// Update
 	@PutMapping("{id}")
 	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
-		if (personToUpdate.getId() == null) {
-			throw new IllegalArgumentException("L'ID est nécessaire pour mettre à jour une personne.");
-		}
 		return personService.update(personToUpdate);
 	}
+
+	// Update avec gestion des exceptions directement dans le Controller
+	// -> vérifier que l’utilisateur n’a pas passé d’entité sans id
+//	@PutMapping("{id}")
+//	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
+//		if (personToUpdate.getId() == null) {
+//			throw new IllegalArgumentException("L'ID est nécessaire pour mettre à jour une personne.");
+//		}
+//		return personService.update(personToUpdate);
+//	}
 
 	// Exception Handler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

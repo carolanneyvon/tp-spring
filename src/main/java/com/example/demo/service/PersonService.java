@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exceptions.PersonNotFoundException;
+import com.example.demo.exceptions.PersonToCreateHasAnIdException;
+import com.example.demo.exceptions.PersonToUpdateHasNoIdException;
 import com.example.demo.model.Animal;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
@@ -22,16 +25,25 @@ public class PersonService {
 
 	// Create
 	public Person create(@Valid Person personToCreate) {
+		if (personToCreate.getId() != null) {
+	        throw new PersonToCreateHasAnIdException();
+	    }
 		return personRepository.save(personToCreate);
 	}
 
 	// Update
 	public Person update(@Valid Person personToUpdate) {
+		if (personToUpdate.getId() == null) {
+	        throw new PersonToUpdateHasNoIdException();
+	    }
 		return personRepository.save(personToUpdate);
 	}
 
 	// Delete
 	public void deleteById(Integer id) {
+		if (!personRepository.existsById(id)) {
+			throw new PersonNotFoundException();
+		}
 		personRepository.deleteById(id);
 	}
 
