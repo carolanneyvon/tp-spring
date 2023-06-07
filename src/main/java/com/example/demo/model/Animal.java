@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -25,9 +27,13 @@ public class Animal {
 	private Integer id;
 
 	@Column(length = 50)
+	@NotEmpty
+	@Size(max = 50)
 	private String color;
 
 	@Column(length = 50)
+	@NotEmpty
+	@Size(max = 50)
 	private String name;
 
 	@Enumerated(EnumType.STRING)

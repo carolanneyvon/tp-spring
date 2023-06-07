@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -16,10 +18,14 @@ public class Species {
 	private Integer id;
 
 	@Column(length = 50)
+	@NotEmpty
+	@Size(max = 50)
 	//essaie de trouver une colonne qui a le nom commonName
 	private String commonName;
 
 	@Column(length = 200)
+	@NotEmpty
+	@Size(max = 200)
 	private String latinName;
 
 	@Override
