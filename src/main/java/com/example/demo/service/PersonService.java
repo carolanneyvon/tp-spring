@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Animal;
@@ -34,8 +36,13 @@ public class PersonService {
 	}
 
 	// FindAll
-	public List<Person> findAll() {
-		return personRepository.findAll();
+//	public List<Person> findAll() {
+//		return personRepository.findAll();
+//	}
+	
+	// FindALL avec une liste paginée
+	public Page<Person> findAll(Pageable pageable) {
+	    return personRepository.findAll(pageable);
 	}
 
 	// FindById

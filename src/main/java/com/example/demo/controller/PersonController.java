@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
-import java.util.List;
+//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,9 +45,16 @@ public class PersonController {
 	}
 
 	// FindAll
-	@GetMapping
-	public List<Person> findAll() {
-		return personService.findAll();
+//	@GetMapping
+//	public List<Person> findAll() {
+//		return personService.findAll();
+//	}
+	
+	// FindALL avec une liste paginée
+	// localhost:8080/rest/person/page?page=1&size=2 -> page numéro 2 et de taille 2
+	@GetMapping("page") 
+	public Page<Person> findAll(Pageable pageable) {
+	    return personService.findAll(pageable);
 	}
 
 	// FindById
