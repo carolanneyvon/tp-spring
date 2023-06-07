@@ -36,12 +36,12 @@ public class PersonService {
 	}
 
 	// FindAll
-//	public List<Person> findAll() {
-//		return personRepository.findAll();
-//	}
+	public List<Person> findAll() {
+		return personRepository.findAll();
+	}
 	
 	// FindALL avec une liste paginée
-	public Page<Person> findAll(Pageable pageable) {
+	public Page<Person> findAllPageable(Pageable pageable) {
 	    return personRepository.findAll(pageable);
 	}
 

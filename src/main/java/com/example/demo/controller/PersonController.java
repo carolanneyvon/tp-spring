@@ -1,11 +1,12 @@
 package com.example.demo.controller;
 
-//import java.util.List;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+//import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,13 +37,14 @@ public class PersonController {
 //	public Person createPerson(@RequestBody @Valid Person personToCreate) {
 //		return personService.create(personToCreate);
 //	}
-	
-	// Create avec gestion des exceptions -> vérifier que l’utilisateur n’a pas passé d’entité avec id
+
+	// Create avec gestion des exceptions -> vérifier que l’utilisateur n’a pas
+	// passé d’entité avec id
 	@PostMapping
 	public Person createPerson(@RequestBody @Valid Person personToCreate) {
-		if(personToCreate.getId() != null) {
-	        throw new IllegalArgumentException("Un ID ne doit pas être spécifié lors de la création d'une personne.");
-	    }
+		if (personToCreate.getId() != null) {
+			throw new IllegalArgumentException("Un ID ne doit pas être spécifié lors de la création d'une personne.");
+		}
 		return personService.create(personToCreate);
 	}
 
@@ -50,21 +53,22 @@ public class PersonController {
 //	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
 //		return personService.update(personToUpdate);
 //	}
-	
-	// Update avec gestion des exceptions -> vérifier que l’utilisateur n’a pas passé d’entité sans id
+
+	// Update avec gestion des exceptions -> vérifier que l’utilisateur n’a pas
+	// passé d’entité sans id
 	@PutMapping("{id}")
 	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
-		if(personToUpdate.getId() == null) {
-	        throw new IllegalArgumentException("L'ID est nécessaire pour mettre à jour une personne.");
-	    }
+		if (personToUpdate.getId() == null) {
+			throw new IllegalArgumentException("L'ID est nécessaire pour mettre à jour une personne.");
+		}
 		return personService.update(personToUpdate);
 	}
-	
+
 	// Exception Handler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler({ MethodArgumentNotValidException.class, IllegalArgumentException.class })
 	public String handleException(Exception e) {
-	    return e.getMessage();
+		return e.getMessage();
 	}
 
 	// Delete
@@ -74,16 +78,26 @@ public class PersonController {
 	}
 
 	// FindAll
-//	@GetMapping
-//	public List<Person> findAll() {
-//		return personService.findAll();
+	@GetMapping
+	public List<Person> findAll() {
+		return personService.findAll();
+	}
+
+	// FindALL avec une liste paginée
+	// sans @RequestParam
+	// http://localhost:8080/rest/person/page?page=1&size=2 -> page numéro 2 et de taille 2
+//	@GetMapping("page")
+//	public Page<Person> findAllPage(Pageable pageable) {
+//	    return personService.findAllPageable(pageable);
 //	}
 	
-	// FindALL avec une liste paginée
-	// localhost:8080/rest/person/page?page=1&size=2 -> page numéro 2 et de taille 2
+	// avec @RequestParam
+	// http://localhost:8080/rest/person/page -> "pageSize": 2, "pageNumber": 1,
 	@GetMapping("page") 
-	public Page<Person> findAll(Pageable pageable) {
-	    return personService.findAll(pageable);
+	public Page<Person> findAllPage(
+			@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "2") int pageSize) {
+		return personService.findAllPageable(PageRequest.of(pageNumber, pageSize));
 	}
 
 	// FindById
