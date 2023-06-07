@@ -12,45 +12,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Person;
-import com.example.demo.service.PersonService;
+import com.example.demo.model.Animal;
+import com.example.demo.service.AnimalService;
+
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/rest/person")
-public class PersonController {
-
+@RequestMapping("/rest/animal")
+public class AnimalController {
 	@Autowired
-	PersonService personService;
+	AnimalService animalService;
 
 	// Create
 	@PostMapping
-	public Person createPerson(@RequestBody @Valid Person personToCreate) {
-		return personService.create(personToCreate);
+	public Animal createAnimal(@RequestBody @Valid Animal animalToCreate) {
+		return animalService.create(animalToCreate);
 	}
 
 	// Update
 	@PutMapping("{id}")
-	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
-		return personService.update(personToUpdate);
+	public Animal updateAnimal(@PathVariable Integer id, @RequestBody @Valid Animal animalToUpdate) {
+		return animalService.update(animalToUpdate);
 	}
 
 	// Delete
 	@DeleteMapping("{id}")
-	public void deletePerson(@PathVariable Integer id) {
-		personService.deleteById(id);
+	public void deleteAnimal(@PathVariable Integer id) {
+		animalService.deleteById(id);
 	}
 
 	// FindAll
 	@GetMapping
-	public List<Person> findAll() {
-		return personService.findAll();
+	public List<Animal> findAll() {
+		return animalService.findAll();
 	}
 
 	// FindById
-	@GetMapping("/{id}") // localhost:8080/rest/person/{id}
-	public Person findById(@PathVariable Integer id) {
-		return personService.findById(id);
+	@GetMapping("/{id}") // localhost:8080/rest/animal/{id}
+	public Animal findById(@PathVariable Integer id) {
+		return animalService.findById(id);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.Animal;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
 
@@ -40,6 +41,24 @@ public class PersonService {
 	// FindById
 	public Person findById(Integer id) {
 		return personRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+	}
+
+	// Méthodes "passe-plat"
+
+	public List<Person> findByFirstnameOrLastname(String firstname, String lastname) {
+		return personRepository.findByFirstnameOrLastname(firstname, lastname);
+	}
+
+	public List<Person> findByAgeGreaterThanEqual(int age) {
+		return personRepository.findByAgeGreaterThanEqual(age);
+	}
+
+	public List<Person> findBetweenMinAgeAndMaxAge(int minAge, int maxAge) {
+		return personRepository.findBetweenMinAgeAndMaxAge(minAge, maxAge);
+	}
+
+	public List<Person> findAllPersonsByAnimal(Animal animal) {
+		return personRepository.findAllPersonsByAnimal(animal);
 	}
 
 }
