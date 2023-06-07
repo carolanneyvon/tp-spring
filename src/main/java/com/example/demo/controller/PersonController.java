@@ -36,7 +36,7 @@ public class PersonController {
 //		return personService.create(personToCreate);
 //	}
 	
-	// Create avec gestion des exceptions -> entité sans id
+	// Create avec gestion des exceptions -> vérifier que l’utilisateur n’a pas passé d’entité avec id
 	@PostMapping
 	public Person createPerson(@RequestBody @Valid Person personToCreate) {
 		if(personToCreate.getId() != null) {
@@ -51,7 +51,7 @@ public class PersonController {
 //		return personService.update(personToUpdate);
 //	}
 	
-	// Update avec gestion des exceptions -> entité sans id
+	// Update avec gestion des exceptions -> vérifier que l’utilisateur n’a pas passé d’entité sans id
 	@PutMapping("{id}")
 	public Person updatePerson(@PathVariable Integer id, @RequestBody @Valid Person personToUpdate) {
 		if(personToUpdate.getId() == null) {
