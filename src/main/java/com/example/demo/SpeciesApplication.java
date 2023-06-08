@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.example.demo.enums.Sex;
 import com.example.demo.model.Animal;
@@ -19,6 +20,7 @@ import com.example.demo.repository.PersonRepository;
 import com.example.demo.repository.SpeciesRepository;
 
 @SpringBootApplication
+@EnableScheduling
 public class SpeciesApplication /* implements CommandLineRunner */ {
 	@Autowired
 	private AnimalRepository animalRepository;
