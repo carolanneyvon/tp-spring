@@ -44,6 +44,11 @@ public class PersonService {
 	    }
 		return personRepository.save(personToUpdate);
 	}
+	
+	// Save pour test AOP
+	public Person save(@Valid Person personToSave) {
+	        throw new RuntimeException();
+	}
 
 	// Delete
 	public void deleteById(Integer id) {

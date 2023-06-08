@@ -71,7 +71,18 @@ public class PersonController {
 	public String handleException(Exception e) {
 		return e.getMessage();
 	}
-
+	
+	// Save pour test AOP
+	@GetMapping("/testAop")
+    public String test() {
+        try {
+            personService.save(null);
+        } catch (Exception e) {
+            // exception
+        }
+        return "Test AOP";
+    }
+	
 	// Delete
 	@DeleteMapping("{id}")
 	public void deletePerson(@PathVariable Integer id) {
