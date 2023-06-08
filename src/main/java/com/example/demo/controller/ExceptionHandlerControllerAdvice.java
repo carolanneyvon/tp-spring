@@ -39,7 +39,8 @@ public class ExceptionHandlerControllerAdvice {
 	// Méthode qui va intercepter l’erreur qui est lancée par Spring lors d’une validation qui échoue
 	@ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDto handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
+    public ErrorDto handleValidationExceptions (MethodArgumentNotValidException ex, WebRequest request) {
+		ex.printStackTrace();
         StringBuilder message = new StringBuilder();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {

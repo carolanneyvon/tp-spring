@@ -1,18 +1,21 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.PersonDto;
 import com.example.demo.exceptions.PersonNotFoundException;
 import com.example.demo.exceptions.PersonToCreateHasAnIdException;
 import com.example.demo.exceptions.PersonToUpdateHasNoIdException;
 import com.example.demo.model.Animal;
 import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
+import com.example.demo.dto.PersonDtoMapper;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -22,6 +25,9 @@ public class PersonService {
 
 	@Autowired
 	private PersonRepository personRepository;
+	
+	@Autowired
+	PersonDtoMapper personDtoMapper;
 
 	// Create
 	public Person create(@Valid Person personToCreate) {
@@ -48,8 +54,16 @@ public class PersonService {
 	}
 
 	// FindAll
-	public List<Person> findAll() {
-		return personRepository.findAll();
+//	public List<Person> findAll() {
+//		return personRepository.findAll();
+//	}
+	
+	// FindAll avec PersonDto
+	public List<PersonDto> findAll() {
+		return personRepository.findAll()
+				.stream()
+		        .map((person)-> personDtoMapper.toDto(person))
+		        .collect(Collectors.toList());
 	}
 	
 	// FindALL avec une liste paginée

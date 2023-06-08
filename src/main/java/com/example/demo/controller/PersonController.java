@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.PersonDto;
 import com.example.demo.model.Person;
 import com.example.demo.service.PersonService;
 
@@ -78,10 +79,17 @@ public class PersonController {
 	}
 
 	// FindAll
+//	@GetMapping
+//	public List<Person> findAll() {
+//		return personService.findAll();
+//	}
+	
+	// FindAll avec PersonDto
 	@GetMapping
-	public List<Person> findAll() {
-		return personService.findAll();
+	public List<PersonDto> findAll() {
+	    return personService.findAll();
 	}
+
 
 	// FindALL avec une liste paginée
 	// sans @RequestParam
