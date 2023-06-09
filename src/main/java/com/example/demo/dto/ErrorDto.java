@@ -16,7 +16,6 @@ public class ErrorDto {
 	 * @param description
 	 */
 	public ErrorDto(int statusCode, LocalDateTime localDateTime, String message, String description) {
-		super();
 		this.statusCode = statusCode;
 		this.localDateTime = localDateTime;
 		this.message = message;
